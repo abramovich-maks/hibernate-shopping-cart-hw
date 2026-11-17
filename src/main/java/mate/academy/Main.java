@@ -15,6 +15,7 @@ import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
 import mate.academy.service.ShoppingCartService;
+import mate.academy.service.UserService;
 
 public class Main {
     private static final Injector INJECTOR = Injector.getInstance("mate.academy");
@@ -90,5 +91,13 @@ public class Main {
         System.out.println(byUser);
 
         shoppingCartService.clear(byUser);
+
+        UserService userService = (UserService) INJECTOR.getInstance(UserService.class);
+        User alice = new User();
+        alice.setEmail("alice@gmail.com");
+        alice.setPassword("54321");
+        userService.add(alice);
+        shoppingCartService.registerNewShoppingCart(alice);
+        System.out.println(shoppingCartService.getByUser(alice));
     }
 }
